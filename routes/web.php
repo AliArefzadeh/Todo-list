@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/mail/{user}', [MailController::class, 'index'])->name('send.email');
+Route::get('/mail/{user}', [MailController::class, 'sendVerificationEmail'])->name('send.email');
 Route::get('/verify/{user}', [MailController::class, 'verifyEmail'])->name('verify.email');
 
 

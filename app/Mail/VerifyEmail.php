@@ -46,9 +46,7 @@ class VerifyEmail extends Mailable
                 'url' => $this->verificationUrl,
             ],
         );
-        /*return new Content(
-            view: 'mails.verify-email',
-        );*/
+
     }
 
     /**

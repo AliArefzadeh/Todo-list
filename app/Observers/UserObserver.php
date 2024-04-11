@@ -4,16 +4,24 @@ namespace App\Observers;
 
 use App\Http\Controllers\MailController;
 use App\Models\User;
+use App\Services\EmailVerificationService;
 
 class UserObserver
 {
     /**
      * Handle the User "created" event.
      */
-    public function created(User $user): void
+    private $emailVerificationService;
+
+    public function __construct(EmailVerificationService $emailVerificationService)
     {
-       $sendMail= new MailController();
-        $sendMail->index($user);
+        $this->emailVerificationService = $emailVerificationService;
+    }
+
+    public function created(User $user)
+    {
+        // Send verification email
+        $this->emailVerificationService->sendVerificationEmail($user);
     }
 
     /**
@@ -23,7 +31,7 @@ class UserObserver
     {
         /*if ($user->wasChanged('email_verified_at') && $user->getOriginal('email_verified_at)*/
         if (($user->email_verified_at)) {
-            $user->tokens()->update(['abilities'=>'["todo:crud"]']);
+            $user->tokens()->update(['abilities' => '["todo:crud"]']);
         }
     }
 

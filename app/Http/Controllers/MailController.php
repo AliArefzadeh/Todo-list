@@ -1,31 +1,37 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
-use App\Mail\VerifyEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\EmailVerificationService;
 
 class MailController extends Controller
 {
-    public function index(User $user)
+    protected $emailVerificationService;
+
+    public function __construct(EmailVerificationService $emailVerificationService)
     {
-        $verificationUrl = \URL::temporarySignedRoute(
-            'verify.email', now()->addMinutes(30), ['user' => $user->id]
-        );
+        $this->emailVerificationService = $emailVerificationService;
+    }
 
-         \Mail::to($user)->send(new VerifyEmail($verificationUrl));
-        //return (new VerifyEmail($verificationUrl));
+    public function sendVerificationEmail(User $user)
+    {
+        $this->emailVerificationService->sendVerificationEmail($user);
 
+        return response()->json(['message' => 'Verification email sent successfully']);
     }
 
     public function verifyEmail(User $user, Request $request)
     {
-        if (!$request->hasValidSignature()) {
-            abort(401);
-        }
-        elseif ($request->hasValidSignature()) {
-            $user->update(['email_verified_at' => now()]);
+        $result = $this->emailVerificationService->verifyEmail($request);
+
+        if (isset($result['error'])) {
+            return response()->json(['error' => $result['error']], 401);
+        } else {
+            return response()->json(['message' => $result['message']]);
         }
     }
 }
+
