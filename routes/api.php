@@ -24,14 +24,14 @@ Route::post('register',[AuthController::class,'register']);
 Route::prefix('/v1')->group(function () {
 
     Route::get('auth/login', [AuthController::class, 'login'])->middleware('guest')->name('auth.login');
-    Route::get('auth/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+    Route::get('auth/me', [AuthController::class, 'me'])->middleware(['auth:sanctum','json']);
     Route::get('auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 });
 
 //active protected
 
-Route::group(['prefix' => 'active','middleware' => ['auth:sanctum', 'abilities:todo:crud']],function () {
+Route::group(['prefix' => 'active','middleware' => ['json','auth:sanctum', 'abilities:todo:crud']],function () {
 
     Route::get('/todo/{todo}',[TodoController::class,'index'])->name('todo.index');
     Route::post('/todo',[TodoController::class,'store'])->name('todo.store');
