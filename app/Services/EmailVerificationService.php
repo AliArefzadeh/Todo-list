@@ -18,13 +18,12 @@ class EmailVerificationService
         Mail::to($user)->send(new VerifyEmail($verificationUrl));
     }
 
-    public function verifyEmail(Request $request)
+    public function verifyEmail(Request $request,User $user)
     {
         if (!$request->hasValidSignature()) {
             return ['error' => 'Invalid signature'];
         }
 
-        $user = User::findOrFail($request->user);
         $user->update(['email_verified_at' => now()]);
 
         return ['message' => 'Email verified successfully'];

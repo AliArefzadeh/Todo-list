@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\TodoController;
+use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 //public
 Route::post('register',[AuthController::class,'register']);
+/*Route::get('/mail/{user}', [MailController::class, 'sendVerificationEmail'])->name('send.email');
+Route::get('/verify/{user}', [MailController::class, 'verifyEmail'])->name('verify.email');*/
 
 //global protected
 Route::prefix('/v1')->group(function () {

@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Http\Controllers\MailController;
 use App\Models\User;
 use App\Services\EmailVerificationService;
 
@@ -29,7 +28,6 @@ class UserObserver
      */
     public function updated(User $user): void
     {
-        /*if ($user->wasChanged('email_verified_at') && $user->getOriginal('email_verified_at)*/
         if (($user->email_verified_at)) {
             $user->tokens()->update(['abilities' => '["todo:crud"]']);
         }

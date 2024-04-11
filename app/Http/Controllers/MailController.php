@@ -25,7 +25,8 @@ class MailController extends Controller
 
     public function verifyEmail(User $user, Request $request)
     {
-        $result = $this->emailVerificationService->verifyEmail($request);
+
+        $result = $this->emailVerificationService->verifyEmail($request,$user);
 
         if (isset($result['error'])) {
             return response()->json(['error' => $result['error']], 401);
