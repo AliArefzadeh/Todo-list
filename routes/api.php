@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\TodoController;
-use App\Http\Controllers\MailController;
+use App\Http\Controllers\Api\v1\MailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,15 +20,14 @@ use Illuminate\Support\Facades\Route;
 
 //public
 Route::post('register',[AuthController::class,'register']);
-/*Route::get('/mail/{user}', [MailController::class, 'sendVerificationEmail'])->name('send.email');
-Route::get('/verify/{user}', [MailController::class, 'verifyEmail'])->name('verify.email');*/
+Route::get('/mail/{user}', [MailController::class, 'sendVerificationEmail'])->name('send.email');
+Route::get('/verify/{user}', [MailController::class, 'verifyEmail'])->name('verify.email');
 
 //global protected
 Route::prefix('/v1')->group(function () {
-
-    Route::get('auth/login', [AuthController::class, 'login'])->middleware('guest')->name('auth.login');
+    Route::post('auth/login', [AuthController::class, 'login'])->middleware('guest')->name('auth.login');
     Route::get('auth/me', [AuthController::class, 'me'])->middleware(['auth:sanctum','json']);
-    Route::get('auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 });
 

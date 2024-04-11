@@ -74,7 +74,7 @@ class TodoController extends Controller
     {
         $todo->delete();
         return response()->json([
-            'message' => 'Todo got deleted'
+            'message' => 'Todo resource deleted successfully'
         ], 200);
     }
 }

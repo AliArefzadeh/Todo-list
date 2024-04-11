@@ -13,6 +13,6 @@ class AuthService
 
     public function getTokenPermissions(User $user)
     {
-        return $user->email_verified_at !== null ? ['todo:crud'] : ['*'];
+        return $user->email_verified_at !== null ? ['todo:crud'] : [''];
     }
 }

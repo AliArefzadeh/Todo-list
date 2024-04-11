@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,8 +21,6 @@ Route::get('/', function (Request $request) {
     }else return ("it works");
 });
 
-Route::get('/mail/{user}', [MailController::class, 'sendVerificationEmail'])->name('send.email');
-Route::get('/verify/{user}', [MailController::class, 'verifyEmail'])->name('verify.email');
 
 
 Route::get('/dashboard', function () {

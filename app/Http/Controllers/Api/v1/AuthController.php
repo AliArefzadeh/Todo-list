@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
@@ -44,15 +45,16 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json([
-            auth()->user()
+            "user" => new UserResource(auth()->user()),
+
         ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
+        auth()->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'All tokens have been revoked.',
+            'message' => 'User logged out successfully',
         ]);
     }
 }

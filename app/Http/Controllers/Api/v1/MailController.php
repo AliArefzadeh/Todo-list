@@ -1,11 +1,11 @@
 <?php
 
+namespace App\Http\Controllers\Api\v1;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Services\EmailVerificationService;
+use Illuminate\Http\Request;
 
 class MailController extends Controller
 {
@@ -35,4 +35,3 @@ class MailController extends Controller
         }
     }
 }
-
