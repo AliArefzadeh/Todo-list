@@ -16,7 +16,6 @@ class TodoController extends Controller
     public function index(Todo $todo)
     {
         return new TodoResource($todo);
-
     }
 
     /**
@@ -33,8 +32,12 @@ class TodoController extends Controller
     public function store(Request $request)
     {
 
+        $todo = auth()->user()->todos()->create($request->all());
 
-        auth()->user()->Todos()->create($request->all());
+        return response()->json([
+            'message' => 'Todo resource created successfully',
+            'data' => new TodoResource($todo)
+        ], 201);
     }
 
     /**

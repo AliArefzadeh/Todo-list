@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    $user = User::find(6);
-    dd($user->email_verified_at == null);
-
-});
 
 
 Route::get('/mail/{user}', [MailController::class, 'sendVerificationEmail'])->name('send.email');
