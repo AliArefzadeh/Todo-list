@@ -21,7 +21,10 @@ class UserObserver
      */
     public function updated(User $user): void
     {
-        //
+        /*if ($user->wasChanged('email_verified_at') && $user->getOriginal('email_verified_at)*/
+        if (($user->email_verified_at)) {
+            $user->tokens()->update(['abilities'=>'["todo:crud"]']);
+        }
     }
 
     /**

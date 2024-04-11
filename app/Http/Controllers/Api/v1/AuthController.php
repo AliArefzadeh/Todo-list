@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $request->authenticate();
-        $loginToken = auth()->user()->createToken('loginToken');
+        $loginToken = auth()->user()->createToken('loginToken', (auth()->user()->email_verified_at !== null ? ['todo:crud'] : ['*']));
 
         return response()->json([
             'message'=>'A token has been created',

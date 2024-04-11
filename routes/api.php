@@ -1,5 +1,7 @@
 <?php
+
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +23,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //public
 Route::post('register',[AuthController::class,'register']);
 
-
-
-//protected
+//global protected
 Route::prefix('/v1')->group(function () {
 
     Route::get('auth/login', [AuthController::class, 'login'])->middleware('guest')->name('auth.login');
@@ -32,3 +32,13 @@ Route::prefix('/v1')->group(function () {
 
 });
 
+//active protected
+
+Route::group(['prefix' => 'active','middleware' => ['auth:sanctum', 'abilities:todo:crud']],function () {
+
+    Route::get('/todo/{todo}',[TodoController::class,'index'])->name('todo.index');
+    Route::post('/todo',[TodoController::class,'store'])->name('todo.store');
+    Route::put('todo/{todo}',[TodoController::class,'update'])->name('todo.update');
+    Route::delete('todo/{todo}',[TodoController::class,'destroy'])->name('todo.destroy');
+
+});

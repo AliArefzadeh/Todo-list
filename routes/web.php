@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    $user = User::find(6);
+    dd($user->email_verified_at == null);
+
+});
+
 
 Route::get('/mail/{user}', [MailController::class, 'index'])->name('send.email');
 Route::get('/verify/{user}', [MailController::class, 'verifyEmail'])->name('verify.email');
